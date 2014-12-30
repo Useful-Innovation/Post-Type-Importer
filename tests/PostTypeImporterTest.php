@@ -12,6 +12,7 @@ class PostTypeImporterTest extends PHPUnit_Framework_TestCase
     $importer = new PostTypeImporter(
       new GoBrave\Util\NullLogger(),
       new GoBrave\Util\CaseConverter(),
+      new GoBrave\Util\Wp(),
       new GoBrave\PostTypeImporter\Config([
         'post_types_path' => __DIR__ . '/generated'
       ])

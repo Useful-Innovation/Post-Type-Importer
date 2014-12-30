@@ -5,6 +5,8 @@ namespace GoBrave\PostTypeImporter;
 use GoBrave\Util\MF_FIELD_TYPE;
 use GoBrave\Util\LoggerInterface;
 use GoBrave\Util\CaseConverter;
+use GoBrave\Util\CropMode;
+use GoBrave\Util\IWP;
 
 class PostTypeImporter
 {
@@ -16,11 +18,13 @@ class PostTypeImporter
 
   private $logger;
   private $case_converter;
+  private $wp;
   private $config;
 
-  public function __construct(LoggerInterface $logger, CaseConverter $case_converter, Config $config) {
+  public function __construct(LoggerInterface $logger, CaseConverter $case_converter, IWP $wp, Config $config) {
     $this->logger         = $logger;
     $this->case_converter = $case_converter;
+    $this->wp             = $wp;
     $this->config         = $config;
   }
 
@@ -50,10 +54,6 @@ class PostTypeImporter
     }
     $this->importGroups($struct->name, $struct->groups);
     $this->writeModelFile($post_type, $this->snakeToCamel($post_type));
-    if($struct->single === true) {
-      $this->createFirstPost($struct);
-    }
-
     flush_rewrite_rules(true);
 
     $this->logger->success("Post type '" . $post_type . "' imported");
@@ -134,10 +134,7 @@ class PostTypeImporter
   private function writeModelFile($post_type, $class_name) {
     $file = GR_APP_PATH . '/PostTypes/' . $class_name . '.php';
 
-    if(file_exists($file)) {
-      //$this->logger->warning('Model for post type \'' . $post_type . '\' already exists. I wont overwrite so you don\'t loose your work');
-      return;
-    }
+    if(file_exists($file)) { return; }
 
     $content = "<?php namespace App\PostTypes;\n\nuse App\Presenter;\n\nclass " . $class_name . " extends Presenter\n{\n  const POST_TYPE = '" . $post_type . "';\n}\n";
 
@@ -370,7 +367,7 @@ class PostTypeImporter
 
     if($size['width'] == $size['height']) {
       // kvadratisk
-      if($size['crop'] == \GoBrave\CropMode::SOFT) {
+      if($size['crop'] == CropMode::SOFT) {
         $field->label .= '. Välj en bild, där båda sidorna är minst ' . $size['width'] . ' pixlar';
       } else {
         $field->label .= '. Välj en kvadratisk bild, med minst sidan ' . $size['width'] . ' pixlar';
@@ -384,21 +381,5 @@ class PostTypeImporter
     }
 
     return $field->label;
-  }
-
-  private function createFirstPost($struct) {
-
-    $class = \App\Presenter::postTypeToClass($struct->name);
-    $posts = $class::all();
-
-    if($posts->length() > 0) {
-      return;
-    }
-
-    $post = new \GoBrave\Importer\Post();
-    $post->post_title  = $struct->singular;
-    $post->post_type   = $struct->name;
-    $post->post_status = 'publish';
-    $post->save();
   }
 }
