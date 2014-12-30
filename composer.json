@@ -1,14 +1,14 @@
 {
-    "name": "emil/post-type-importer",
-    "description" : "A lib that generates JSON structs that are used to create Wordpress + Magic Fields post types",
+    "name": "gobrave/post-type-importer",
+    "description": "A lib that generates JSON structs that are used to create Wordpress + Magic Fields post types",
     "authors": [
         {
-            "name": "Emil Lunnergård",
-            "email": "emil.lunnergard@gmail.com"
+            "name": "Emil Rosendahl",
+            "email": "emil@gobrave.se"
         }
     ],
     "require": {
-        "gobrave/util" : "~1.2"
+        "gobrave/util" : "~1.5"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
