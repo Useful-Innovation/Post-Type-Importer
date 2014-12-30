@@ -28,6 +28,11 @@ class PostTypeImporter
     $this->config         = $config;
   }
 
+  //
+  //
+  //      Public interface
+  //
+  //
   public function import($post_type) {
     $file = $this->filePath($post_type);
     if(!file_exists($file)) {
@@ -117,10 +122,6 @@ class PostTypeImporter
     }
   }
 
-  public function rebuild() {
-    $this->destroyAll();
-    $this->importAll();
-  }
 
 
 
@@ -130,7 +131,11 @@ class PostTypeImporter
 
 
 
-
+  //
+  //
+  //    Helpers
+  //
+  //
   private function writeModelFile($post_type, $class_name) {
     $file = GR_APP_PATH . '/PostTypes/' . $class_name . '.php';
 
