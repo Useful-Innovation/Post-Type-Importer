@@ -7,6 +7,7 @@ use GoBrave\Util\LoggerInterface;
 use GoBrave\Util\CaseConverter;
 use GoBrave\Util\CropMode;
 use GoBrave\Util\IWP;
+use stdClass;
 
 class PostTypeImporter
 {
@@ -58,7 +59,7 @@ class PostTypeImporter
       $this->importPostType($struct, $pt_arguments);
     }
     $this->importGroups($struct->name, $struct->groups);
-    $this->writeModelFile($post_type, $this->case_converter->snakeToCamel($post_type));
+    $this->writeModelFile($post_type, $this->case_converter->snakeToCamel($post_type, true));
     flush_rewrite_rules(true);
 
     $this->logger->success("Post type '" . $post_type . "' imported");
@@ -137,7 +138,7 @@ class PostTypeImporter
   //
   //
   private function writeModelFile($post_type, $class_name) {
-    $file = GR_APP_PATH . '/PostTypes/' . $class_name . '.php';
+    $file = $this->config->getClassPath() . '/' . $class_name . '.php';
 
     if(file_exists($file)) { return; }
 
@@ -220,7 +221,7 @@ class PostTypeImporter
   private function importPostType($struct, $arguments) {
     global $wpdb;
 
-    $post_type = new \stdClass();
+    $post_type = new stdClass();
     $post_type->type        = $struct->name;
     $post_type->name        = $struct->singular;
     $post_type->description = '';
@@ -281,7 +282,7 @@ class PostTypeImporter
   private function importField($post_type, $group_id, $group_name, $field, $display_order) {
     global $wpdb;
 
-    $object = new \stdClass();
+    $object = new stdClass();
     $object->name            = implode('_', array($group_name, $field->name));
     $object->label           = $field->title;
     $object->description     = $field->description;

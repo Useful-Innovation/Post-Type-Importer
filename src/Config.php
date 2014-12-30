@@ -5,6 +5,7 @@ namespace GoBrave\PostTypeImporter;
 class Config
 {
   private $post_types_path;
+  private $class_path;
 
   public function __construct($settings = []) {
     if(count($settings) > 0) {
@@ -22,5 +23,13 @@ class Config
 
   public function getPostTypesPath() {
     return $this->post_types_path;
+  }
+
+  public function setClassPath($class_path) {
+    $this->class_path = $class_path;
+  }
+
+  public function getClassPath() {
+    return $this->class_path;
   }
 }
