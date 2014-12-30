@@ -58,7 +58,7 @@ class PostTypeImporter
       $this->importPostType($struct, $pt_arguments);
     }
     $this->importGroups($struct->name, $struct->groups);
-    $this->writeModelFile($post_type, $this->snakeToCamel($post_type));
+    $this->writeModelFile($post_type, $this->case_converter->snakeToCamel($post_type));
     flush_rewrite_rules(true);
 
     $this->logger->success("Post type '" . $post_type . "' imported");
