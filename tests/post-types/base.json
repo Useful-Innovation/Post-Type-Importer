@@ -1,0 +1,47 @@
+{
+  "name"     : "startpage",
+  "singular" : "Startsidan",
+  "plural"   : "Startsidan",
+  "prefix"   : "Ny",
+  "has_page" : false,
+  "single"   : true,
+  "rewrite"  : "startpage",
+  "groups"   : [
+    {
+      "name"       : "info",
+      "title"      : "Information",
+      "duplicated" : false,
+      "fields"     : [
+        {
+          "name"        : "title",
+          "title"       : "Titel",
+          "description" : "a textbox",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "textbox",
+          "options"     : {}
+        },
+        {
+          "name"        : "text",
+          "title"       : "Text",
+          "description" : "A markdown editor",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "markdown_editor",
+          "options"     : {}
+        },
+        {
+          "name"        : "image",
+          "title"       : "Bild",
+          "description" : "image",
+          "duplicated"  : true,
+          "required"    : true,
+          "type"        : "image_media",
+          "options"     : {
+            "image_size" : "some-image-size"
+          }
+        }
+      ]
+    }
+  ]
+}
