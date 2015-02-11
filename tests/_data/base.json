@@ -38,7 +38,7 @@
           "required"    : true,
           "type"        : "image_media",
           "options"     : {
-            "image_size" : "some-image-size"
+            "image_size" : "featured-image"
           }
         }
       ]

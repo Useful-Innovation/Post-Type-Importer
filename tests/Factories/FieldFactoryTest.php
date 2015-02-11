@@ -9,7 +9,7 @@ class FieldFactoryTest extends PHPUnit_Framework_TestCase
   * @dataProvider differentFields
   */
   public function testCreate($data, $class) {
-    $factory = new FieldFactory($this->getNamespace());
+    $factory = new FieldFactory($this->getNamespace(), DATA::$image_sizes);
     $field   = $factory->create($data);
 
     $this->assertTrue($field instanceof $class, 'Checking that field of type ' . $data->type . ' is of ' . $class);
@@ -47,7 +47,7 @@ class FieldFactoryTest extends PHPUnit_Framework_TestCase
 
   private function getData() {
     if(!isset($this->data)) {
-      $this->data = json_decode(file_get_contents(__DIR__ . '/post-types/base.json'));
+      $this->data = json_decode(file_get_contents(__DIR__ . '/../_data/base.json'));
     }
     return $this->data;
   }

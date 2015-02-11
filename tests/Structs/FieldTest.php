@@ -60,7 +60,7 @@ class FieldTest extends PHPUnit_Framework_TestCase
 
   private function getData() {
     if(!isset($this->data)) {
-      $this->data = json_decode(file_get_contents(__DIR__ . '/post-types/base.json'));
+      $this->data = json_decode(file_get_contents(__DIR__ . '/../_data/base.json'));
     }
     return $this->data;
   }

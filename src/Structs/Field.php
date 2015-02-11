@@ -21,7 +21,11 @@ class Field
     $this->duplicated  = $duplicated;
     $this->required    = $required;
     $this->type        = $type;
-    $this->options     = $options;
+    $this->options     = $this->extendOptions($options);
+  }
+
+  public function extendOptions($options) {
+    return $options;
   }
 
   public function getName() {
