@@ -6,26 +6,28 @@ use stdClass;
 
 class Field
 {
-  private $name;
-  private $title;
-  private $description;
-  private $duplicated;
-  private $required;
-  private $type;
-  private $options;
+  protected $name;
+  protected $title;
+  protected $description;
+  protected $duplicated;
+  protected $required;
+  protected $type;
+  protected $options;
 
-  public function __construct($name, $title, $description, $duplicated, $required, $type, stdClass $options = null) {
+  protected $default_options = [];
+
+  public function __construct($name, $title, $description, $duplicated, $required, $type, array $options) {
     $this->name        = $name;
     $this->title       = $title;
     $this->description = $description;
     $this->duplicated  = $duplicated;
     $this->required    = $required;
     $this->type        = $type;
-    $this->options     = $this->extendOptions($options);
+    $this->options     = $this->mergeOptions($options);
   }
 
-  public function extendOptions($options) {
-    return $options;
+  protected function mergeOptions($options) {
+    return array_merge($this->default_options, $options);
   }
 
   public function getName() {
@@ -62,6 +64,19 @@ class Field
 
   public function getOptions() {
     return $this->options;
+  }
+
+  public function toArray() {
+    $array = [];
+    foreach($this as $key => $value) {
+      if($key == 'default_options') {
+        continue;
+      }
+
+      $array[$key] = $value;
+    }
+
+    return $array;
   }
 
 }

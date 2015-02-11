@@ -35,11 +35,11 @@ class FieldFactoryTest extends PHPUnit_Framework_TestCase
     $base  = $this->getNamespace();
     $class = 'Field';
     if($type == 'textbox') {
-      $class = 'TextBoxField';
+      $class = 'FieldTextBox';
     } else if($type == 'image') {
-      $class = 'ImageField';
+      $class = 'FieldImage';
     } else if($type == 'markdown_editor') {
-      $class = 'MarkdownEditorField';
+      $class = 'FieldMarkdownEditor';
     }
 
     return implode('', [$base, $class]);

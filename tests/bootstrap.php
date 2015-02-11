@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/BaseTestCases/FieldTestCase.php');
+
 
 class WPDB
 {

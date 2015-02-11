@@ -2,7 +2,7 @@
 
 namespace GoBrave\PostTypeImporter\Structs;
 
-class MarkdownEditorField extends Field
+class FieldMarkdownEditor extends Field
 {
   
 }

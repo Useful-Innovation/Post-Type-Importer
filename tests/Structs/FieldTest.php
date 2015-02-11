@@ -27,7 +27,7 @@ class FieldTest extends PHPUnit_Framework_TestCase
     $this->assertSame($data->duplicated, $field->getDuplicated());
     $this->assertSame($data->required, $field->getRequired());
     $this->assertSame($data->type, $field->getType());
-    $this->assertSame($data->options, $field->getOptions());
+    $this->assertTrue(is_array($field->getOptions()));
 
     // Aliases
     $this->assertSame($data->duplicated, $field->isDuplicatable());
@@ -54,7 +54,7 @@ class FieldTest extends PHPUnit_Framework_TestCase
       $field->duplicated,
       $field->required,
       $field->type,
-      $field->options
+      (array)$field->options
     );
   }
 

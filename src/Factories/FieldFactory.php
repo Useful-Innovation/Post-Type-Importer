@@ -14,7 +14,7 @@ class FieldFactory
     $this->image_sizes    = $image_sizes;
   }
 
-  public function create($data) {
+  public function create(\stdClass $data) {
     $class = $this->typeToClass($data->type);
     return new $class(
       $data->name,
@@ -23,7 +23,7 @@ class FieldFactory
       $data->duplicated,
       $data->required,
       $data->type,
-      $this->extendOptions($data->options)
+      (array)$this->extendOptions($data->options)
     );
   }
 
@@ -33,12 +33,12 @@ class FieldFactory
     if('textbox' === $type) {
       $class = 'Textbox';
     } else if('image_media' === $type) {
-      $class = 'Image';
+      $class = 'ImageMedia';
     } else if('markdown_editor' === $type) {
       $class = 'MarkdownEditor';
     }
 
-    return implode('', [$this->base_namespace, $class, 'Field']);
+    return implode('', [$this->base_namespace, 'Field', $class]);
   }
 
   private function extendOptions($options) {
