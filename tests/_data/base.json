@@ -100,6 +100,17 @@
           "options"     : {
             "values"    : ["Lorem 1", "Lorem 2", "Lorem 3"]
           }
+        },
+        {
+          "name"        : "radiobutton_list",
+          "title"       : "Radiobuttonlist",
+          "description" : "Radiobuttonlist",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "radiobutton_list",
+          "options"     : {
+            "values"    : ["Lorem 1", "Lorem 2", "Lorem 3"]
+          }
         }
       ]
     }

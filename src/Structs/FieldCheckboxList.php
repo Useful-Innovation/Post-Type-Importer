@@ -7,7 +7,7 @@ use GoBrave\PostTypeImporter\Structs\Field;
 class FieldCheckboxList extends Field
 {
   protected $default_options = [
-    'options'       => null,
+    'values'        => null,
     'default_value' => null
   ];
 

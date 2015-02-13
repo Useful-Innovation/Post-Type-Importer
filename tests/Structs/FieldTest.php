@@ -71,7 +71,10 @@ class FieldTest extends TestCase
   public function fieldsWithOptionsFromFile() {
     $fields_with_options = [
       'checkbox_list',
-      'image_media'
+      'radiobutton_list',
+      'dropdown',
+      'image_media',
+      'related_type'
     ];
     $data = $this->getData();
     $set  = [];
