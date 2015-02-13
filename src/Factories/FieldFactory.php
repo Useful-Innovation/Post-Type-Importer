@@ -32,8 +32,8 @@ class FieldFactory
 
     if('textbox' === $type) {
       $class = 'TextBox';
-    } else if('image' === $type) {
-      $class = 'Image';
+    } else if('image_media' === $type) {
+      $class = 'ImageMedia';
     } else if('markdown_editor' === $type) {
       $class = 'MarkdownEditor';
     } else if('checkbox_list' === $type) {

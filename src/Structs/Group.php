@@ -37,7 +37,7 @@ class Group
     return $this->fields;
   }
 
-  public function toArray() {
+  public function toMagicFields() {
     $array = [
       'name'       => $this->name,
       'title'      => $this->title,
@@ -46,7 +46,7 @@ class Group
     ];
 
     foreach($this->fields as $key => $field) {
-      $array['fields'][] = $field->toArray();
+      $array['fields'][] = $field->toMagicFields();
     }
 
     return $array;

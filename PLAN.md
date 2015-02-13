@@ -14,7 +14,7 @@ PostType
   - toArray()
     $array = []
     foreach $groups as $group
-      $array[] = $group->toArray()
+      $array[] = $group->toMagicFields()
     return $array
 
 Group
@@ -26,7 +26,7 @@ Group
   - toArray()
     $array = []
     foreach $fields as $field
-      $array[] = $field->toArray()
+      $array[] = $field->toMagicFields()
     return $array
 
 Field

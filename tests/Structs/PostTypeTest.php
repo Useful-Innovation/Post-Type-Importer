@@ -5,6 +5,10 @@ use GoBrave\PostTypeImporter\Structs\PostType;
 class PostTypeTest extends TestCase
 {
   public function testConstruct() {
+    $mock = $this->getGroupMock();
+    $mock->method('toMagicFields')
+         ->willReturn([]);
+    $groups    = [$mock];
     $post_type = new PostType(
       'name',
       'singular',
@@ -13,7 +17,7 @@ class PostTypeTest extends TestCase
       true,
       true,
       'rewrite',
-      []
+      $groups
     );
 
     $this->assertSame($post_type->getName(), 'name');
@@ -23,10 +27,10 @@ class PostTypeTest extends TestCase
     $this->assertSame($post_type->getHasPage(), true);
     $this->assertSame($post_type->getSingle(), true);
     $this->assertSame($post_type->getRewrite(), 'rewrite');
-    $this->assertSame($post_type->getGroups(), []);
+    $this->assertSame($post_type->getGroups(), $groups);
 
 
-    $array = $post_type->toArray();
+    $array = $post_type->toMagicFields();
 
     $this->assertSame($array['name'], 'name');
     $this->assertSame($array['singular'], 'singular');
@@ -35,6 +39,6 @@ class PostTypeTest extends TestCase
     $this->assertSame($array['has_page'], true);
     $this->assertSame($array['single'], true);
     $this->assertSame($array['rewrite'], 'rewrite');
-    $this->assertSame($array['groups'], []);
+    $this->assertTrue(is_array($array['groups']));
   }
 }

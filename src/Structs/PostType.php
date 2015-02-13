@@ -56,7 +56,7 @@ class PostType
     return $this->groups;
   }
 
-  public function toArray() {
+  public function toMagicFields() {
     $array = [
       'name'     => $this->name,
       'singular' => $this->singular,
@@ -69,7 +69,7 @@ class PostType
     ];
 
     foreach($this->groups as $key => $group) {
-      $array['groups'][] = $group->toArray();
+      $array['groups'][] = $group->toMagicFields();
     }
 
     return $array;

@@ -18,7 +18,7 @@ class GroupTest extends TestCase
   public function testToArray() {
     $fields = [$this->getFieldMock()];
     $group = new Group('info', 'Information', true, $fields);
-    $array = $group->toArray();
+    $array = $group->toMagicFields();
 
     $this->assertSame($array['name'], 'info');
     $this->assertSame($array['title'], 'Information');

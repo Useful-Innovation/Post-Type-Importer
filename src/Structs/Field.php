@@ -66,7 +66,7 @@ class Field
     return $this->options;
   }
 
-  public function toArray() {
+  public function toMagicFields() {
     $array = [];
     foreach($this as $key => $value) {
       if($key == 'default_options') {

@@ -12,15 +12,15 @@ class FieldImageMedia extends Field
     'image_size' => null
   ];
 
-  public function mergeOptions($options) {
-    if(!isset($options['image_size'])) {
-      throw new \Exception('asd');
+  protected function mergeOptions($options) {
+    if(!isset($options['image_size']) OR !($options['image_size'] instanceof ImageSize)) {
+      throw new \InvalidArgumentException('Field of type image_media must have an option key named \'image_size\' with a string value and as valid image size');
     }
     return parent::mergeOptions($options);
   }
 
-  public function toArray() {
-    $array = parent::toArray();
+  public function toMagicFields() {
+    $array = parent::toMagicFields();
     $array['options']['image_size'] = $array['options']['image_size']->getName();
     return $array;
   }

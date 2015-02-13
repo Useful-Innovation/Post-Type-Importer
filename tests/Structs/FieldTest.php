@@ -29,8 +29,8 @@ class FieldTest extends TestCase
   /**
   * @dataProvider fieldsFromFile
   */
-  public function testValues($data) {
-    $field = $this->createField($data, 'GoBrave\PostTypeImporter\Structs\Field');
+  public function testValues($type, $data) {
+    $field = $this->createField($data, $this->typeToClass($data->type));
 
     $this->assertSame($data->name, $field->getName());
     $this->assertSame($data->title, $field->getTitle());
@@ -45,12 +45,40 @@ class FieldTest extends TestCase
     $this->assertSame($data->required, $field->isRequired());
   }
 
+  /**
+   * @dataProvider fieldsWithOptionsFromFile
+   * @expectedException InvalidArgumentException
+   */
+  public function testValuesWithoutOptions($type, $data) {
+    $data->options = new stdClass;
+    $field = $this->createField($data, $this->typeToClass($data->type));
+  }
+
+
 
   public function fieldsFromFile() {
     $data = $this->getData();
     $set  = [];
     foreach($data->groups[0]->fields as $tmp) {
-      $set[] = [$tmp];
+      if($tmp->type == 'image_media') {
+        $tmp->options->image_size = $this->imageSizeMock();
+      }
+      $set[] = [$tmp->type, $tmp];
+    }
+    return $set;
+  }
+
+  public function fieldsWithOptionsFromFile() {
+    $fields_with_options = [
+      'checkbox_list',
+      'image_media'
+    ];
+    $data = $this->getData();
+    $set  = [];
+    foreach($data->groups[0]->fields as $tmp) {
+      if(in_array($tmp->type, $fields_with_options)) {
+        $set[] = [$tmp->type, $tmp];
+      }
     }
     return $set;
   }
