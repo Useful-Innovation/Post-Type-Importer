@@ -2,25 +2,27 @@
 
 use GoBrave\PostTypeImporter\Structs\Group;
 
-class GroupTest extends PHPUnit_Framework_TestCase
+class GroupTest extends TestCase
 {
   public function testGroup() {
-    $group = new Group('info', 'Information', true, []);
+    $fields = [$this->getFieldMock()];
+    $group = new Group('info', 'Information', true, $fields);
 
     $this->assertSame($group->getName(), 'info');
     $this->assertSame($group->getTitle(), 'Information');
     $this->assertSame($group->getDuplicated(), true);
     $this->assertSame($group->isDuplicatable(), true);
-    $this->assertSame($group->getFields(), []);
+    $this->assertSame($group->getFields(), $fields);
   }
 
   public function testToArray() {
-    $group = new Group('info', 'Information', true, []);
+    $fields = [$this->getFieldMock()];
+    $group = new Group('info', 'Information', true, $fields);
     $array = $group->toArray();
 
     $this->assertSame($array['name'], 'info');
     $this->assertSame($array['title'], 'Information');
     $this->assertSame($array['duplicated'], true);
-    $this->assertSame($array['fields'], []);
+    $this->assertTrue(is_array($array['fields']));
   }
 }

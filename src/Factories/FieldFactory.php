@@ -31,11 +31,25 @@ class FieldFactory
     $class = '';
 
     if('textbox' === $type) {
-      $class = 'Textbox';
-    } else if('image_media' === $type) {
-      $class = 'ImageMedia';
+      $class = 'TextBox';
+    } else if('image' === $type) {
+      $class = 'Image';
     } else if('markdown_editor' === $type) {
       $class = 'MarkdownEditor';
+    } else if('checkbox_list' === $type) {
+      $class = 'CheckboxList';
+    } else if('checkbox' === $type) {
+      $class = 'Checkbox';
+    } else if('multiline' === $type) {
+      $class = 'Multiline';
+    } else if('related_type' === $type) {
+      $class = 'RelatedType';
+    } else if('file' === $type) {
+      $class = 'File';
+    } else if('dropdown' === $type) {
+      $class = 'Dropdown';
+    } else if('radiobutton_list' === $type) {
+      $class = 'RadiobuttonList';
     }
 
     return implode('', [$this->base_namespace, 'Field', $class]);

@@ -40,6 +40,66 @@
           "options"     : {
             "image_size" : "featured-image"
           }
+        },
+        {
+          "name"        : "checkbox_list",
+          "title"       : "Checkbox",
+          "description" : "checkbox",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "checkbox_list",
+          "options"     : {
+            "values"    : ["Lorem 1", "Lorem 2", "Lorem 3"]
+          }
+        },
+        {
+          "name"        : "checkbox",
+          "title"       : "Checkbox",
+          "description" : "checkbox",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "checkbox",
+          "options"     : {}
+        },
+        {
+          "name"        : "multiline",
+          "title"       : "Multiline",
+          "description" : "multiline",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "multiline",
+          "options"     : {}
+        },
+        {
+          "name"        : "related_type",
+          "title"       : "Related type",
+          "description" : "related type",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "related_type",
+          "options"     : {
+            "post_type" : "post"
+          }
+        },
+        {
+          "name"        : "file",
+          "title"       : "File",
+          "description" : "file",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "file",
+          "options"     : {}
+        },
+        {
+          "name"        : "dropdown",
+          "title"       : "Dropdown",
+          "description" : "dropdown",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "dropdown",
+          "options"     : {
+            "values"    : ["Lorem 1", "Lorem 2", "Lorem 3"]
+          }
         }
       ]
     }

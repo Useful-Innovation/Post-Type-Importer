@@ -2,7 +2,7 @@
 
 use GoBrave\PostTypeImporter\Factories\FieldFactory;
 
-class FieldFactoryTest extends PHPUnit_Framework_TestCase
+class FieldFactoryTest extends TestCase
 {
 
   /**
@@ -40,15 +40,22 @@ class FieldFactoryTest extends PHPUnit_Framework_TestCase
       $class = 'FieldImage';
     } else if($type == 'markdown_editor') {
       $class = 'FieldMarkdownEditor';
+    } else if($type == 'checkbox_list') {
+      $class = 'FieldCheckboxList';
+    } else if($type == 'checkbox') {
+      $class = 'FieldCheckbox';
+    } else if($type == 'multiline') {
+      $class = 'FieldMultiline';
+    } else if($type == 'related_type') {
+      $class = 'FieldRelatedType';
+    } else if($type == 'file') {
+      $class = 'FieldFile';
+    } else if($type == 'dropdown') {
+      $class = 'FieldDropdown';
+    } else if($type == 'radiobutton_list') {
+      $class = 'FieldRadiobuttonList';
     }
 
     return implode('', [$base, $class]);
-  }
-
-  private function getData() {
-    if(!isset($this->data)) {
-      $this->data = json_decode(file_get_contents(__DIR__ . '/../_data/base.json'));
-    }
-    return $this->data;
   }
 }

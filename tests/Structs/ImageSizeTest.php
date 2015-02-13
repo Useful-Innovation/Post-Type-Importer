@@ -2,7 +2,7 @@
 
 use GoBrave\PostTypeImporter\Structs\ImageSize;
 
-class ImageSizeTest extends PHPUnit_Framework_TestCase
+class ImageSizeTest extends TestCase
 {
   public function testValues() {
     $image_size = new ImageSize('featured-image', 500, 100, true);

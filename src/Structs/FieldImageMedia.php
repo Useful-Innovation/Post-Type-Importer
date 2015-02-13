@@ -12,6 +12,13 @@ class FieldImageMedia extends Field
     'image_size' => null
   ];
 
+  public function mergeOptions($options) {
+    if(!isset($options['image_size'])) {
+      throw new \Exception('asd');
+    }
+    return parent::mergeOptions($options);
+  }
+
   public function toArray() {
     $array = parent::toArray();
     $array['options']['image_size'] = $array['options']['image_size']->getName();

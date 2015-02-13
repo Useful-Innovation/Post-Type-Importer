@@ -2,16 +2,27 @@
 
 use GoBrave\PostTypeImporter\Structs\Field;
 
-class FieldTest extends PHPUnit_Framework_TestCase
+class FieldTest extends TestCase
 {
   public function setUp() {
     $this->getData();
   }
 
   public function testConstruct() {
-    $field = $this->create($this->getData()->groups[0]->fields[0]);
+    $field = $this->createField($this->getData()->groups[0]->fields[0], 'GoBrave\PostTypeImporter\Structs\Field');
 
     $this->assertTrue($field instanceof Field, '$field is instance of Field');
+  }
+
+  public function testCustomOptions() {
+    $data  = [
+      'size'      => 200,
+      'evalueate' => 1
+    ];
+    $field = new Field(null, null, null, null, null, null, $data);
+
+    $options = $field->getOptions();
+    $this->assertTrue($options == $data);
   }
 
 
@@ -19,7 +30,7 @@ class FieldTest extends PHPUnit_Framework_TestCase
   * @dataProvider fieldsFromFile
   */
   public function testValues($data) {
-    $field = $this->create($data);
+    $field = $this->createField($data, 'GoBrave\PostTypeImporter\Structs\Field');
 
     $this->assertSame($data->name, $field->getName());
     $this->assertSame($data->title, $field->getTitle());
@@ -42,26 +53,5 @@ class FieldTest extends PHPUnit_Framework_TestCase
       $set[] = [$tmp];
     }
     return $set;
-  }
-
-
-
-  private function create($field) {
-    return new Field(
-      $field->name,
-      $field->title,
-      $field->description,
-      $field->duplicated,
-      $field->required,
-      $field->type,
-      (array)$field->options
-    );
-  }
-
-  private function getData() {
-    if(!isset($this->data)) {
-      $this->data = json_decode(file_get_contents(__DIR__ . '/../_data/base.json'));
-    }
-    return $this->data;
   }
 }

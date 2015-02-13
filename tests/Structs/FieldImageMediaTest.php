@@ -2,12 +2,13 @@
 
 use GoBrave\PostTypeImporter\Structs\FieldImageMedia;
 
-class FieldImageMediaTest extends FieldTextCase
+class FieldImageMediaTest extends TestCase
 {
   public $class = 'GoBrave\PostTypeImporter\Structs\FieldImageMedia';
 
   public function testDefaultOptions() {
-    $field = new FieldImageMedia(null, null, null, null, null, null, []);
+    
+    $field = new FieldImageMedia(null, null, null, null, null, null, ['image_size' => 'a value']);
 
     $options = $field->getOptions();
     $this->assertTrue($options == [
@@ -15,7 +16,7 @@ class FieldImageMediaTest extends FieldTextCase
       'max_height' => '',
       'max_width'  => '',
       'custom'     => '',
-      'image_size' => null
+      'image_size' => 'a value'
     ]);
   }
 
@@ -27,7 +28,7 @@ class FieldImageMediaTest extends FieldTextCase
          ->willReturn('featured-image');
     $data  = $this->getData()->groups[0]->fields[2];
     $data->options->image_size = $mock;
-    $field = $this->create($data, $this->class);
+    $field = $this->createField($data, $this->class);
     $array = $field->toArray();
 
     $this->assertTrue($array == [
