@@ -39,4 +39,24 @@ class ImageSize
   public function cropModeHard() {
     return $this->crop_mode === true;
   }
+
+  public function isSquare() {
+    return $this->width == $this->height;
+  }
+
+  public function isHorizontal() {
+    return $this->width > $this->height;
+  }
+
+  public function isLandscape() {
+    return $this->isHorizontal();
+  }
+
+  public function isVertical() {
+    return $this->height > $this->width;
+  }
+
+  public function isPortrait() {
+    return $this->isVertical();
+  }
 }

@@ -7,6 +7,9 @@ class TestCase extends PHPUnit_Framework_TestCase
   }
 
   protected function createField($data, $class) {
+    if($class === 'GoBrave\PostTypeImporter\Structs\Field') {
+      echo ':';
+    }
     return new $class(
       $data->name,
       $data->title,
@@ -68,6 +71,8 @@ class TestCase extends PHPUnit_Framework_TestCase
       $class = 'FieldDropdown';
     } else if($type == 'radiobutton_list') {
       $class = 'FieldRadiobuttonList';
+    } else {
+      throw new Exception('No class for type \'' . $type . '\'');
     }
 
     return implode('', [$base, $class]);

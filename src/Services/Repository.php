@@ -76,12 +76,12 @@ class Repository
 
     $this->wpdb->query($sql);
     $group_id = $this->wpdb->insert_id;
-    foreach($group['fields'] as $field) {
-      $this->saveField($field, $group_id);
+    foreach($group['fields'] as $key => $field) {
+      $this->saveField($field, $group_id, $key);
     }
   }
 
-  private function saveField($field, $group_id) {
+  private function saveField($field, $group_id, $display_order) {
     $sql = $this->wpdb->prepare("
       INSERT INTO
         " . self::TABLE_POST_TYPES . "
@@ -105,7 +105,7 @@ class Repository
       $group_id,
       $values['type'],
       $values['required_field'],
-      $values['display_order'],
+      $display_order,
       $values['duplicated'],
       $values['active'],
       $values['options']

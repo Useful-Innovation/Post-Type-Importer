@@ -21,7 +21,41 @@ class FieldImageMedia extends Field
 
   public function toMagicFields() {
     $array = parent::toMagicFields();
-    $array['options']['image_size'] = $array['options']['image_size']->getName();
+    $label = rtrim(rtrim($array['label']), '.');
+    if($this->options['image_size']->isSquare()) {
+      $label .= $this->imageSquareLabel();
+    } else if($this->options['image_size']->isLandscape()) {
+      $label .= $this->imageHorizontalLabel();
+    } else {
+      $label .= $this->imageVerticalLabel();
+    }
+    $array['label'] = $label;
     return $array;
+  }
+
+  protected function optionsToMagicFields() {
+    $options = $this->options;
+    $options['image_size'] = $options['image_size']->getName();
+    return $options;
+  }
+
+  private function imageSquareLabel() {
+    return sprintf(
+      '. Välj en kvadratisk bild med sidan minst %d pixlar.',
+      $this->options['image_size']->getWidth()
+    );
+  }
+
+  private function imageHorizontalLabel($part = 'liggande') {
+    return sprintf(
+      '. Välj en %s bild. Minst %d pixlar bred och %d pixlar hög.',
+      $part,
+      $this->options['image_size']->getWidth(),
+      $this->options['image_size']->getHeight()
+    );
+  }
+
+  private function imageVerticalLabel() {
+    return $this->imageHorizontalLabel('stående');
   }
 }

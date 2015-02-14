@@ -1,6 +1,7 @@
 <?php
 
 use GoBrave\PostTypeImporter\Structs\FieldImageMedia;
+use GoBrave\PostTypeImporter\Structs\ImageSize;
 
 class FieldImageMediaTest extends TestCase
 {
@@ -22,25 +23,102 @@ class FieldImageMediaTest extends TestCase
 
   public function testToArray() {
     $mock = $this->imageSizeMock();
+    $mock->method('getName')
+         ->willReturn('featured-image');
     $data  = $this->getData()->groups[0]->fields[2];
     $data->options->image_size = $mock;
     $field = $this->createField($data, $this->class);
     $array = $field->toMagicFields();
 
     $this->assertTrue($array == [
-      'name'        => 'image',
-      'title'       => 'Bild',
-      'description' => 'image',
-      'duplicated'  => true,
-      'required'    => true,
-      'type'        => 'image_media',
-      'options'     => [
+      'name'           => 'image',
+      'label'          => 'Bild. Välj en stående bild. Minst 0 pixlar bred och 0 pixlar hög.',
+      'description'    => 'image',
+      'duplicated'     => 1,
+      'required_field' => 1,
+      'active'         => 1,
+      'type'           => 'image_media',
+      'options'        => serialize([
         'css_class'  => 'magic_fields',
         'max_height' => '',
         'max_width'  => '',
         'custom'     => '',
         'image_size' => 'featured-image'
-      ]
+      ])
     ], 'Checking that the toArray representation of the FieldImageMedia is correct');
+  }
+
+  /**
+  * @dataProvider imageTitles
+  */
+  public function testNameWithImageSizePortrait() {
+    $mock = $this->imageSizeMock();
+    $mock->method('isPortrait')
+         ->willReturn(true);
+    $mock->method('isLandscape')
+         ->willReturn(false);
+    $mock->method('isSquare')
+         ->willReturn(false);
+
+    $field = new FieldImageMedia(null, 'Bild', null, null, null, null, [
+      'image_size' => new ImageSize('featured-image', 100, 500, true)
+    ]);
+
+    $array = $field->toMagicFields();
+
+    $this->assertSame($array['label'], 'Bild. Välj en stående bild. Minst 100 pixlar bred och 500 pixlar hög.');
+  }
+
+  /**
+  * @dataProvider imageTitles
+  */
+  public function testNameWithImageSizeLandscape() {
+    $mock = $this->imageSizeMock();
+    $mock->method('isPortrait')
+         ->willReturn(false);
+    $mock->method('isLandscape')
+         ->willReturn(true);
+    $mock->method('isSquare')
+         ->willReturn(false);
+
+    $field = new FieldImageMedia(null, 'Bild', null, null, null, null, [
+      'image_size' => new ImageSize('featured-image', 500, 100, true)
+    ]);
+
+    $array = $field->toMagicFields();
+
+    $this->assertSame($array['label'], 'Bild. Välj en liggande bild. Minst 500 pixlar bred och 100 pixlar hög.');
+  }
+
+  /**
+  * @dataProvider imageTitles
+  */
+  public function testNameWithImageSizeSquare() {
+    $mock = $this->imageSizeMock();
+    $mock->method('isPortrait')
+         ->willReturn(false);
+    $mock->method('isLandscape')
+         ->willReturn(false);
+    $mock->method('isSquare')
+         ->willReturn(true);
+
+    $field = new FieldImageMedia(null, 'Bild', null, null, null, null, [
+      'image_size' => new ImageSize('featured-image', 500, 500, true)
+    ]);
+
+    $array = $field->toMagicFields();
+
+    $this->assertSame($array['label'], 'Bild. Välj en kvadratisk bild med sidan minst 500 pixlar.');
+  }
+
+
+
+
+  public function imageTitles() {
+    return [
+      ['Bild'],
+      ['Bild.'],
+      ['Bild. ']
+    ];
   }
 }

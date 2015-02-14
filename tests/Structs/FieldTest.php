@@ -1,6 +1,6 @@
 <?php
 
-use GoBrave\PostTypeImporter\Structs\Field;
+use GoBrave\PostTypeImporter\Structs\FieldTextbox;
 
 class FieldTest extends TestCase
 {
@@ -9,9 +9,10 @@ class FieldTest extends TestCase
   }
 
   public function testConstruct() {
-    $field = $this->createField($this->getData()->groups[0]->fields[0], 'GoBrave\PostTypeImporter\Structs\Field');
+    $field = $this->getData()->groups[0]->fields[0];
+    $field = $this->createField($field, $this->typeToClass($field->type));
 
-    $this->assertTrue($field instanceof Field, '$field is instance of Field');
+    $this->assertTrue($field instanceof FieldTextbox, '$field is instance of FieldTextbox');
   }
 
   public function testCustomOptions() {
@@ -19,7 +20,7 @@ class FieldTest extends TestCase
       'size'      => 200,
       'evalueate' => 1
     ];
-    $field = new Field(null, null, null, null, null, null, $data);
+    $field = new FieldTextbox(null, null, null, null, null, null, $data);
 
     $options = $field->getOptions();
     $this->assertTrue($options == $data);

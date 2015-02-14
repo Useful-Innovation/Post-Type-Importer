@@ -4,7 +4,7 @@ namespace GoBrave\PostTypeImporter\Structs;
 
 use stdClass;
 
-class Field
+abstract class Field
 {
   protected $name;
   protected $title;
@@ -67,16 +67,22 @@ class Field
   }
 
   public function toMagicFields() {
-    $array = [];
-    foreach($this as $key => $value) {
-      if($key == 'default_options') {
-        continue;
-      }
-
-      $array[$key] = $value;
-    }
+    $array = [
+      'name'           => $this->name,
+      'label'          => $this->title,
+      'description'    => $this->description,
+      'type'           => $this->type,
+      'required_field' => (int)$this->required,
+      'duplicated'     => (int)$this->duplicated,
+      'active'         => 1,
+      'options'        => serialize($this->optionsToMagicFields())
+    ];
 
     return $array;
+  }
+
+  protected function optionsToMagicFields() {
+    return $this->options;
   }
 
 }
