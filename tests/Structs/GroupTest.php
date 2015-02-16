@@ -14,15 +14,4 @@ class GroupTest extends TestCase
     $this->assertSame($group->isDuplicatable(), true);
     $this->assertSame($group->getFields(), $fields);
   }
-
-  public function testToArray() {
-    $fields = [$this->getFieldMock()];
-    $group = new Group('info', 'Information', true, $fields);
-    $array = $group->toMagicFields();
-
-    $this->assertSame($array['name'], 'info');
-    $this->assertSame($array['title'], 'Information');
-    $this->assertSame($array['duplicated'], true);
-    $this->assertTrue(is_array($array['fields']));
-  }
 }

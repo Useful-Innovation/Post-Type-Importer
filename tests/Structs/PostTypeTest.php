@@ -28,17 +28,5 @@ class PostTypeTest extends TestCase
     $this->assertSame($post_type->getSingle(), true);
     $this->assertSame($post_type->getRewrite(), 'rewrite');
     $this->assertSame($post_type->getGroups(), $groups);
-
-
-    $array = $post_type->toMagicFields();
-
-    $this->assertSame($array['name'], 'name');
-    $this->assertSame($array['singular'], 'singular');
-    $this->assertSame($array['plural'], 'plural');
-    $this->assertSame($array['prefix'], 'prefix');
-    $this->assertSame($array['has_page'], true);
-    $this->assertSame($array['single'], true);
-    $this->assertSame($array['rewrite'], 'rewrite');
-    $this->assertTrue(is_array($array['groups']));
   }
 }

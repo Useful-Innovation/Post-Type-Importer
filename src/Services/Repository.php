@@ -32,6 +32,10 @@ class Repository
     $this->wpdb->query("DELETE FROM " . self::TABLE_FIELDS     . " WHERE post_type = '" . $name . "'");
   }
 
+  public function getPostTypes() {
+    return $this->wpdb->get_col("SELECT type FROM wp_mf_posttypes");
+  }
+
 
 
 
@@ -77,11 +81,11 @@ class Repository
     $this->wpdb->query($sql);
     $group_id = $this->wpdb->insert_id;
     foreach($group['fields'] as $key => $field) {
-      $this->saveField($field, $group_id, $key);
+      $this->saveField($field, $group_id, $$group['name'], $key);
     }
   }
 
-  private function saveField($field, $group_id, $display_order) {
+  private function saveField($field, $group_id, $group_name, $display_order) {
     $sql = $this->wpdb->prepare("
       INSERT INTO
         " . self::TABLE_POST_TYPES . "
@@ -98,7 +102,7 @@ class Repository
         active          = %d,
         options         = %s
     ", 
-      $values['name'],
+      implode('_', [$group_name, $values['name']]),
       $values['label'],
       $values['description'],
       $values['post_type'],

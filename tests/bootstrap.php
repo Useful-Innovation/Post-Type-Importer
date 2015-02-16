@@ -2,6 +2,7 @@
 
 require_once(__DIR__ . '/TestCase.php');
 
+ini_set('xdebug.var_display_max_depth', 100);
 
 class WPDB
 {
@@ -20,6 +21,26 @@ $wpdb = new WPDB();
 
 
 
+
+class NullLogger implements GoBrave\Util\LoggerInterface
+{
+  public function success($str) {
+    return null;
+  }
+
+  public function warning($str) {
+    return null;
+  }
+
+  public function error($str) {
+    return null;
+  }
+
+  public function info($str) {
+    return null;
+  }
+
+}
 
 
 

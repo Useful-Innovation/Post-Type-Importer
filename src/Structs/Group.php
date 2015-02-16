@@ -40,8 +40,9 @@ class Group
   public function toMagicFields() {
     $array = [
       'name'       => $this->name,
-      'title'      => $this->title,
+      'label'      => $this->title,
       'duplicated' => $this->duplicated,
+      'expanded'   => 1,
       'fields'     => []
     ];
 

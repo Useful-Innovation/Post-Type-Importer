@@ -21,33 +21,6 @@ class FieldImageMediaTest extends TestCase
     ]);
   }
 
-  public function testToArray() {
-    $mock = $this->imageSizeMock();
-    $mock->method('getName')
-         ->willReturn('featured-image');
-    $data  = $this->getData()->groups[0]->fields[2];
-    $data->options->image_size = $mock;
-    $field = $this->createField($data, $this->class);
-    $array = $field->toMagicFields();
-
-    $this->assertTrue($array == [
-      'name'           => 'image',
-      'label'          => 'Bild. Välj en stående bild. Minst 0 pixlar bred och 0 pixlar hög.',
-      'description'    => 'image',
-      'duplicated'     => 1,
-      'required_field' => 1,
-      'active'         => 1,
-      'type'           => 'image_media',
-      'options'        => serialize([
-        'css_class'  => 'magic_fields',
-        'max_height' => '',
-        'max_width'  => '',
-        'custom'     => '',
-        'image_size' => 'featured-image'
-      ])
-    ], 'Checking that the toArray representation of the FieldImageMedia is correct');
-  }
-
   /**
   * @dataProvider imageTitles
   */

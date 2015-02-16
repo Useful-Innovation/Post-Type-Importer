@@ -6,7 +6,47 @@ use TestCase;
 
 class FieldTest extends TestCase
 {
-  public function testFieldTo() {
-    $this->assertTrue(true);
+  public function testToMagicFieldsForFieldTextBox() {
+    $data    = $this->getData()->groups[0]->fields[0];
+    $field   = $this->createField($data, $this->typeToClass($data->type));
+    $array   = $field->toMagicFields();
+    $options = unserialize($array['options']);
+
+    $this->assertSame($array['name'], 'title');
+    $this->assertSame($array['label'], 'Titel');
+    $this->assertSame($array['description'], 'a textbox');
+    $this->assertSame($array['duplicated'], 0);
+    $this->assertSame($array['required_field'], 0);
+    $this->assertSame($array['active'], 1);
+    $this->assertSame($array['type'], 'textbox');
+    $this->assertSame($options['size'], 100);
+    $this->assertSame($options['evalueate'], 0);
+  }
+
+  public function testToMagicFieldsForFieldImageMedia() {
+    $mock = $this->imageSizeMock();
+    $mock->method('getName')
+         ->willReturn('featured-image');
+    $data  = $this->getData()->groups[0]->fields[2];
+    $data->options->image_size = $mock;
+    $field = $this->createField($data, $this->typeToClass($data->type));
+    $array = $field->toMagicFields();
+
+    $this->assertTrue($array == [
+      'name'           => 'image',
+      'label'          => 'Bild. Välj en stående bild. Minst 0 pixlar bred och 0 pixlar hög.',
+      'description'    => 'image',
+      'duplicated'     => 1,
+      'required_field' => 1,
+      'active'         => 1,
+      'type'           => 'image_media',
+      'options'        => serialize([
+        'css_class'  => 'magic_fields',
+        'max_height' => '',
+        'max_width'  => '',
+        'custom'     => '',
+        'image_size' => 'featured-image'
+      ])
+    ], 'Checking that the toMagicFields representation of the FieldImageMedia is correct');
   }
 }
