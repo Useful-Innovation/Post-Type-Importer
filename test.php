@@ -13,12 +13,11 @@ $base = json_decode(file_get_contents(__DIR__ . '/tests/_data/base.json'));
 $factory = new PostTypeFactory(
   new GroupFactory(
     new FieldFactory(
-      'GoBrave\PostTypeImporter\Structs',
       [
         'featured-image' => [
-          'width'     => 500,
-          'height'    => 500,
-          'crop-mode' => true
+          'width'  => 500,
+          'height' => 500,
+          'crop'   => true
         ]
       ]
     )

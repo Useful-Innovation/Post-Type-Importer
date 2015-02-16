@@ -6,11 +6,10 @@ use GoBrave\PostTypeImporter\Structs\ImageSize;
 
 class FieldFactory
 {
-  private $base_namespace;
+  private $base_namespace = 'GoBrave\PostTypeImporter\Structs\\';
   private $image_sizes;
 
-  public function __construct($base_namespace, array $image_sizes) {
-    $this->base_namespace = rtrim($base_namespace, '\\') . '\\';
+  public function __construct(array $image_sizes) {
     $this->image_sizes    = $image_sizes;
   }
 
@@ -64,6 +63,6 @@ class FieldFactory
   }
 
   private function buildImageSize($name, $data) {
-    return new ImageSize($name, $data['width'], $data['height'], $data['crop-mode']);
+    return new ImageSize($name, $data['width'], $data['height'], $data['crop']);
   }
 }

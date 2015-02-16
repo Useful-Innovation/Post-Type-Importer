@@ -3,6 +3,7 @@
 namespace GoBrave\PostTypeImporter\Services;
 
 use GoBrave\PostTypeImporter\Structs\PostType;
+use wpdb;
 
 class Repository
 {
@@ -12,7 +13,7 @@ class Repository
 
   private $wpdb;
 
-  public function __construct(WPDB $wpdb) {
+  public function __construct(wpdb $wpdb) {
     $this->wpdb = $wpdb;
   }
 
@@ -22,7 +23,7 @@ class Repository
 
     $this->savePostType($data);
     foreach($data['groups'] as $group) {
-      $this->saveGroup($group);
+      $this->saveGroup($group, $data['type']);
     }
   }
 
@@ -60,10 +61,10 @@ class Repository
     return (bool)$this->wpdb->query($sql);
   }
 
-  private function saveGroup($group) {
+  private function saveGroup($group, $post_type) {
     $sql = $this->wpdb->prepare("
       INSERT INTO
-        " . self::TABLE_POST_TYPES . "
+        " . self::TABLE_GROUPS . "
       SET
         name       = %s,
         label      = %s,
@@ -73,7 +74,7 @@ class Repository
     ", 
       $group['name'],
       $group['label'],
-      $group['post_type'],
+      $post_type,
       $group['duplicated'],
       $group['expanded']
     );
@@ -81,14 +82,14 @@ class Repository
     $this->wpdb->query($sql);
     $group_id = $this->wpdb->insert_id;
     foreach($group['fields'] as $key => $field) {
-      $this->saveField($field, $group_id, $$group['name'], $key);
+      $this->saveField($field, $group_id, $group['name'], $post_type, $key);
     }
   }
 
-  private function saveField($field, $group_id, $group_name, $display_order) {
+  private function saveField($field, $group_id, $group_name, $post_type, $display_order) {
     $sql = $this->wpdb->prepare("
       INSERT INTO
-        " . self::TABLE_POST_TYPES . "
+        " . self::TABLE_FIELDS . "
       SET
         name            = %s,
         label           = %s,
@@ -102,17 +103,17 @@ class Repository
         active          = %d,
         options         = %s
     ", 
-      implode('_', [$group_name, $values['name']]),
-      $values['label'],
-      $values['description'],
-      $values['post_type'],
+      implode('_', [$group_name, $field['name']]),
+      $field['label'],
+      $field['description'],
+      $post_type,
       $group_id,
-      $values['type'],
-      $values['required_field'],
+      $field['type'],
+      $field['required_field'],
       $display_order,
-      $values['duplicated'],
-      $values['active'],
-      $values['options']
+      $field['duplicated'],
+      $field['active'],
+      $field['options']
     );
 
     return (bool)$this->wpdb->query($sql);

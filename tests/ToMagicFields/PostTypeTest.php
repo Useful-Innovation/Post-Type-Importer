@@ -61,4 +61,25 @@ class PostTypeTest extends TestCase
     $this->assertTrue($args['label']['menu_name']          === 'Produkter');
 
   }
+
+  public function testHiddenPostType() {
+    $pt = new PostType('product', 'Produkt', 'Produkter', 'Ny', false, false, 'product', []);
+    $array = $pt->toMagicFields();
+    $args  = unserialize($array['arguments']);
+    $this->assertTrue($args['option']['publicly_queryable']  === '0');
+    $this->assertTrue($args['option']['exclude_from_search'] === '1');
+  }
+
+  public function testDeepToMagicFields() {
+    $mock = $this->getGroupMock();
+    $mock->method('toMagicFields')
+         ->willReturn([
+          'name' => 'info'
+        ]);
+
+    $pt = new PostType('product', 'Produkt', 'Produkter', 'Ny', false, false, 'product', [$mock]);
+    $array = $pt->toMagicFields();
+
+    $this->assertSame($array['groups'][0]['name'], 'info');
+  }
 }

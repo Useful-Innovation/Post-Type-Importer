@@ -58,11 +58,12 @@ class PostType
 
   public function toMagicFields() {
     $array = [
-      'type'      => $this->name,
-      'name'      => $this->single ? $this->singular : $this->plural,
-      'active'    => 1,
-      'arguments' => serialize($this->buildArguments()),
-      'groups'    => []
+      'type'        => $this->name,
+      'name'        => $this->single ? $this->singular : $this->plural,
+      'description' => '',
+      'active'      => 1,
+      'arguments'   => serialize($this->buildArguments()),
+      'groups'      => []
     ];
 
     foreach($this->groups as $key => $group) {

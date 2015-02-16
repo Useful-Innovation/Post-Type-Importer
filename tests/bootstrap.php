@@ -53,14 +53,14 @@ class DATA
   public static $post_types = null;
   public static $image_sizes = [
     'featured-image' => [
-      'width'     => 960,
-      'height'    => 540,
-      'crop-mode' => true
+      'width'  => 960,
+      'height' => 540,
+      'crop'   => true
     ],
     'facebook-og-image' => [
-      'width'     => 254,
-      'height'    => 254,
-      'crop-mode' => false
+      'width'  => 254,
+      'height' => 254,
+      'crop'   => false
     ]
   ];
 }

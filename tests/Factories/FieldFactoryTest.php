@@ -9,7 +9,7 @@ class FieldFactoryTest extends TestCase
   * @dataProvider differentFields
   */
   public function testCreate($type, $data, $class) {
-    $factory = new FieldFactory($this->getNamespace(), DATA::$image_sizes);
+    $factory = new FieldFactory(DATA::$image_sizes);
     $field   = $factory->create($data);
 
     $this->assertTrue($field instanceof $class, 'Checking that field of type ' . $data->type . ' is of ' . $class);
