@@ -103,7 +103,7 @@ class Repository
         active          = %d,
         options         = %s
     ", 
-      implode('_', [$group_name, $field['name']]),
+      $field['name'],
       $field['label'],
       $field['description'],
       $post_type,
