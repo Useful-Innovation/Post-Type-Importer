@@ -2,3 +2,4 @@ vendor
 test-coverage
 tests/wpdb.php
 project.sublime-workspace
+node_modules
