@@ -10,7 +10,7 @@ class FieldFactory
   private $image_sizes;
 
   public function __construct(array $image_sizes) {
-    $this->image_sizes    = $image_sizes;
+    $this->image_sizes = $image_sizes;
   }
 
   public function create(\stdClass $data) {
@@ -49,6 +49,8 @@ class FieldFactory
       $class = 'Dropdown';
     } else if('radiobutton_list' === $type) {
       $class = 'RadiobuttonList';
+    } else if('super_select' === $type) {
+      $class = 'SuperSelect';
     }
 
     return implode('', [$this->base_namespace, 'Field', $class]);

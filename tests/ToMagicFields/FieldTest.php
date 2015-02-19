@@ -49,4 +49,18 @@ class FieldTest extends TestCase
       ])
     ], 'Checking that the toMagicFields representation of the FieldImageMedia is correct');
   }
+
+  public function testToMagicFieldsForFieldSuperSelect() {
+    $data  = $this->getData()->groups[0]->fields[10];
+    $field = $this->createField($data, $this->typeToClass($data->type));
+    $array = $field->toMagicFields();
+
+    $this->assertSame($array['name'], 'super_select_1');
+    $this->assertSame($array['label'], 'SuperSelect');
+    $this->assertSame($array['type'], 'textbox', 'SuperSelect field is not masquerading as a textbox field');
+
+    $options = unserialize($array['options']);
+    $this->assertSame($options['post_types'], 'all');
+    $this->assertSame($options['force_type'], 'related_type', 'SuperSelect field is not forcing the related_type type');
+  }
 }

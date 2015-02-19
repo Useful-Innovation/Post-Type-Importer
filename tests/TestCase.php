@@ -71,6 +71,8 @@ class TestCase extends PHPUnit_Framework_TestCase
       $class = 'FieldDropdown';
     } else if($type == 'radiobutton_list') {
       $class = 'FieldRadiobuttonList';
+    } else if($type == 'super_select') {
+      $class = 'FieldSuperSelect';
     } else {
       throw new Exception('No class for type \'' . $type . '\'');
     }

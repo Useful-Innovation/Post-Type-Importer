@@ -111,6 +111,26 @@
           "options"     : {
             "values"    : ["Lorem 1", "Lorem 2", "Lorem 3"]
           }
+        },
+        {
+          "name"        : "super_select_1",
+          "title"       : "SuperSelect",
+          "description" : "",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "super_select",
+          "options"     : {}
+        },
+        {
+          "name"        : "super_select_2",
+          "title"       : "SuperSelect",
+          "description" : "",
+          "duplicated"  : false,
+          "required"    : false,
+          "type"        : "super_select",
+          "options"     : {
+            "post_types" : ["page", "post", "product"]
+          }
         }
       ]
     }
