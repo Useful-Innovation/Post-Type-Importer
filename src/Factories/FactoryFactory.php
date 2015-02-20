@@ -4,15 +4,11 @@ namespace GoBrave\PostTypeImporter\Factories;
 
 class FactoryFactory
 {
-  public function build($images) {
+  public function create($images) {
     return new PostTypeFactory(
       new GroupFactory(
         new FieldFactory($images)
       )
     );
-  }
-
-  public static function create($images) {
-    return (new self())->build($images);
   }
 }

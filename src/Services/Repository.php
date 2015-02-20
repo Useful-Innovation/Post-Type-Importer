@@ -21,7 +21,10 @@ class Repository
     $this->delete($post_type->getName());
     $data = $post_type->toMagicFields();
 
-    $this->savePostType($data);
+    if($data['type'] != 'post' AND $data['type'] != 'page') {
+      $this->savePostType($data);
+    }
+
     foreach($data['groups'] as $group) {
       $this->saveGroup($group, $data['type']);
     }
