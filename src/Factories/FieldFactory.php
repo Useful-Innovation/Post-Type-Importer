@@ -30,7 +30,7 @@ class FieldFactory
     $class = '';
 
     if('textbox' === $type) {
-      $class = 'TextBox';
+      $class = 'Textbox';
     } else if('image_media' === $type) {
       $class = 'ImageMedia';
     } else if('markdown_editor' === $type) {
