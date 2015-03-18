@@ -17,4 +17,11 @@ class FieldRadiobuttonList extends Field
     }
     return parent::mergeOptions($options);
   }
+
+  protected function optionsToMagicFields() {
+    $options = parent::optionsToMagicFields();
+    $options['options'] = implode(PHP_EOL, $options['values']);
+    unset($options['values']);
+    return $options;
+  }
 }
