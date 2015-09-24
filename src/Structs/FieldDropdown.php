@@ -16,6 +16,8 @@ class FieldDropdown extends Field
     if(!isset($options['values']) OR !is_array($options['values'])) {
       throw new \InvalidArgumentException('Field of type dropdown must have an option key named \'values\' with array values');
     }
+    $options['options'] = implode(PHP_EOL, $options['values']);
+    unset($options['values']);
     return parent::mergeOptions($options);
   }
 }
